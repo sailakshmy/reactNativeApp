@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import GoalItem from "./components/GoalItem";
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState("");
@@ -58,16 +59,7 @@ export default function App() {
           alwaysBounceVertical={false}
           data={courseGoals}
           keyExtractor={(item, index) => item?.id}
-          renderItem={(goalData) => {
-            return (
-              <View
-                style={styles.goalItem}
-                // key={goal}
-              >
-                <Text style={styles.goalText}>{goalData.item.text}</Text>
-              </View>
-            );
-          }}
+          renderItem={(goalData) => <GoalItem goalData={goalData} />}
         />
         {/* {courseGoals?.map((goal) => ( */}
 
@@ -111,14 +103,5 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
-  },
-  goalItem: {
-    margin: 8,
-    borderRadius: 6,
-    backgroundColor: "#5e08cc",
-    padding: 8,
-  },
-  goalText: {
-    color: "white",
   },
 });
