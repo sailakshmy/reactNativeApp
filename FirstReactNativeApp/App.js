@@ -1,105 +1,39 @@
-// import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
-import {
-  Button,
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import GoalInput from "./components/GoalInput";
 import GoalItem from "./components/GoalItem";
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState("");
   const [courseGoals, setCourseGoals] = useState([]);
 
-  function goalInputHandler(valueFromTextField) {
-    setEnteredGoal(valueFromTextField);
-    // console.log("Value", valueFromTextField);
-  }
-
-  const addGoalHandler = () => {
-    // console.log("enteredText", enteredGoal);
+  const addGoalHandler = (enteredGoal) => {
     setCourseGoals((currentCourseGoals) => [
       ...currentCourseGoals,
       { text: enteredGoal, id: Math.random().toString() },
     ]);
-    setEnteredGoal("");
   };
   return (
-    <View
-      style={styles.appContainer}
-      // style={styles.container}
-    >
-      {/* <View>
-        <Text style={styles.dummyText}>Hello World!!</Text>
-      </View>
-      <Text
-        style={styles.dummyText}
-        // style={{ margin: 16, borderWidth: 2, borderColor: "red", padding: 16 }}
-      >
-        Hello World!! Also
-      </Text>
-      <Button title="Click me" /> */}
-      {/* <StatusBar style="auto" /> */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          value={enteredGoal}
-          style={styles.textInput}
-          placeholder="Your course goal"
-          onChangeText={goalInputHandler}
-        />
-        <Button title="Add Goal" onPress={addGoalHandler} />
-      </View>
+    <View style={styles.appContainer}>
+      <GoalInput addGoalHandler={addGoalHandler} />
+
       <View style={styles.goalsContainer}>
         <Text>List of Goals </Text>
-        {/* <ScrollView> */}
         <FlatList
           alwaysBounceVertical={false}
           data={courseGoals}
           keyExtractor={(item, index) => item?.id}
           renderItem={(goalData) => <GoalItem goalData={goalData} />}
         />
-        {/* {courseGoals?.map((goal) => ( */}
-
-        {/* ))} */}
-        {/* </FlatList> */}
-        {/* </ScrollView> */}
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: "#fff",
-  //   alignItems: "center",
-  //   justifyContent: "center",
-  // },
-  // dummyText: { margin: 16, borderWidth: 2, borderColor: "red", padding: 16 },
   appContainer: {
-    // padding: 50,
     paddingTop: 50,
     paddingHorizontal: 16,
     flex: 1,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 24,
-    borderBottomColor: "#cccccc",
-    borderBottomWidth: 1,
-    flex: 1,
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: "#cccccc",
-    width: "70%",
-    marginRight: 8,
-    padding: 8,
   },
   goalsContainer: {
     flex: 5,
